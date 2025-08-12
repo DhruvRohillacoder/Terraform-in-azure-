@@ -6,9 +6,7 @@ pool:
 
 steps:
 # Terraform Init (Local backend)
-- task: TerraformTask@5
-  inputs:
-    provider: 'none'
-    command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/basic code'
-
+ - task: PowerShell@2
+   inputs:
+     filePath: '$(System.DefaultWorkingDirectory)/basic code'
+     arguments: 'dir'
