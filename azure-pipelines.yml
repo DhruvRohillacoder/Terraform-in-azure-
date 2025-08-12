@@ -8,14 +8,7 @@ steps:
 # Terraform Init (Local backend)
 - task: TerraformTask@5
   inputs:
-    provider: 'azurerm'
+    provider: 'none'
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/basic code'
 
-# Terraform Plan
-- task: TerraformTask@5
-  inputs:
-    provider: 'azurerm'
-    command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/basic code'
-    environmentServiceNameAzureRM: 'dhruvconection'
