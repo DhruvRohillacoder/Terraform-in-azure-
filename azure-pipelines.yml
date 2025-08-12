@@ -2,16 +2,15 @@ trigger:
 - main
 
 pool: 
-  name: dhruvagent  # Apna self-hosted agent pool ka naam
+  name: dhruvagent
 
 steps:
-# Terraform Init
+# Terraform Init (Local backend)
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/basic code'
-    backendServiceArm: 'dhruvconection'  # <-- yahan apna Azure service connection name daalo
 
 # Terraform Plan
 - task: TerraformTask@5
