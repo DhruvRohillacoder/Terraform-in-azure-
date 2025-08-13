@@ -1,19 +1,38 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
-pool:
-  vmImage: ubuntu-latest
+pool: 
+  name: dhruvagent
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: 'latest'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/basic code'
+    backendServiceArm: 'dhruvconection'
+    backendAzureRmOverrideSubscriptionID: '4a8937a7-b294-4a1f-8d31-79bbb1a4c17f'
+    backendAzureRmResourceGroupName: 'dhruv_pip_rs'
+    backendAzureRmStorageAccountName: 'dhruvpipstg'
+    backendAzureRmContainerName: 'dhruvpipcontaner'
+    backendAzureRmKey: 'terraform.tfstate'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/basic code'
+    environmentServiceNameAzureRM: 'dhruvconection'
+    environmentAzureRmOverrideSubscriptionID: '4a8937a7-b294-4a1f-8d31-79bbb1a4c17f'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    environmentServiceNameAzureRM: 'dhruvconection'
+    environmentAzureRmOverrideSubscriptionID: '4a8937a7-b294-4a1f-8d31-79bbb1a4c17f'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/basic code'
