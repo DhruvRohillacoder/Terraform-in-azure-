@@ -5,8 +5,18 @@ pool:
   name: dhruvagent
 
 steps:
-# Terraform Init (Local backend)
- - task: PowerShell@2
-   inputs:
-     filePath: 'C:\myagent\_work\1\s\basic code'
-     arguments: 'dir'
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: '4.38.1'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/basic code'
+    backendServiceArm: 'dhruvconection'
+    backendAzureRmOverrideSubscriptionID: '4a8937a7-b294-4a1f-8d31-79bbb1a4c17f'
+    backendAzureRmResourceGroupName: 'dhruv_pip_rs'
+    backendAzureRmStorageAccountName: 'dhruvpipstg'
+    backendAzureRmContainerName: 'dhruvpipcontaner'
+    backendAzureRmKey: 'terraform.tfstate'
