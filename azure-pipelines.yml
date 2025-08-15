@@ -1,18 +1,8 @@
-trigger: none  # Manual run only
+trigger:
+- main
 
 pool: 
   name: dhruvagent
-
-parameters:
-  # Only manual control for tasks
-  - name: terraformStep
-    type: string
-    default: 'none'
-    values:
-      - none
-      - init
-      - plan
-      - apply
 
 variables:
   terraformWorkingDir: '$(System.DefaultWorkingDirectory)/basic code'
@@ -27,83 +17,31 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
-- ${{ if eq(parameters.terraformStep, 'init') }}:
-  - task: TerraformTask@5
-    displayName: 'Terraform INIT - basic code'
-    inputs:
-      provider: 'azurerm'
-      command: 'init'
-      workingDirectory: '$(terraformWorkingDir)'
-      backendServiceArm: '$(azureServiceConnection)'
-      backendAzureRmResourceGroupName: '$(backendResourceGroup)'
-      backendAzureRmStorageAccountName: '$(backendStorageAccount)'
-      backendAzureRmContainerName: '$(backendContainerName)'
-      backendAzureRmKey: '$(backendKey)'
+- task: TerraformTask@5
+  displayName: 'ab init hogaa'
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(terraformWorkingDir)'
+    backendServiceArm: '$(azureServiceConnection)'
+    backendAzureRmResourceGroupName: '$(backendResourceGroup)'
+    backendAzureRmStorageAccountName: '$(backendStorageAccount)'
+    backendAzureRmContainerName: '$(backendContainerName)'
+    backendAzureRmKey: '$(backendKey)'
 
-- ${{ if eq(parameters.terraformStep, 'plan') }}:
-  - task: TerraformTask@5
-    displayName: 'Terraform PLAN - basic code'
-    inputs:
-      provider: 'azurerm'
-      command: 'plan'
-      workingDirectory: '$(terraformWorkingDir)'
-      environmentServiceNameAzureRM: '$(azureServiceConnection)'
+- task: TerraformTask@5
+  displayName: 'plan hoga ab'
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(terraformWorkingDir)'
+    environmentServiceNameAzureRM: '$(azureServiceConnection)'
 
-- ${{ if eq(parameters.terraformStep, 'apply') }}:
-  - task: TerraformTask@5
-    displayName: 'Terraform APPLY - basic code'
-    inputs:
-      provider: 'azurerm'
-      command: 'apply'
-      workingDirectory: '$(terraformWorkingDir)'
-      commandOptions: '-auto-approve'
-      environmentServiceNameAzureRM: '$(azureServiceConnection)'
-
-
-# trigger:
-# - main
-
-# pool: 
-#   name: dhruvagent
-
-# variables:
-#   terraformWorkingDir: '$(System.DefaultWorkingDirectory)/basic code'
-#   azureServiceConnection: 'dhruvconection'
-#   backendResourceGroup: 'tfdhruvrg'
-#   backendStorageAccount: 'tfdhruvstg'
-#   backendContainerName: 'tfstate'
-#   backendKey: 'terraform.tfstate'
-
-# steps:
-# - task: TerraformInstaller@1
-#   inputs:
-#     terraformVersion: 'latest'
-
-# - task: TerraformTask@5
-#   displayName: 'ab init hogaa'
-#   inputs:
-#     provider: 'azurerm'
-#     command: 'init'
-#     workingDirectory: '$(terraformWorkingDir)'
-#     backendServiceArm: '$(azureServiceConnection)'
-#     backendAzureRmResourceGroupName: '$(backendResourceGroup)'
-#     backendAzureRmStorageAccountName: '$(backendStorageAccount)'
-#     backendAzureRmContainerName: '$(backendContainerName)'
-#     backendAzureRmKey: '$(backendKey)'
-
-# - task: TerraformTask@5
-#   displayName: 'plan hoga ab'
-#   inputs:
-#     provider: 'azurerm'
-#     command: 'plan'
-#     workingDirectory: '$(terraformWorkingDir)'
-#     environmentServiceNameAzureRM: '$(azureServiceConnection)'
-
-# - task: TerraformTask@5
-#   displayName: 'apply hoga ab'
-#   inputs:
-#     provider: 'azurerm'
-#     command: 'apply'
-#     workingDirectory: '$(terraformWorkingDir)'
-#     commandOptions: '-auto-approve'
-#     environmentServiceNameAzureRM: '$(azureServiceConnection)'
+- task: TerraformTask@5
+  displayName: 'apply hoga ab'
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(terraformWorkingDir)'
+    commandOptions: '-auto-approve'
+    environmentServiceNameAzureRM: '$(azureServiceConnection)'
