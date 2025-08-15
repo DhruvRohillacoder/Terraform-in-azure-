@@ -4,35 +4,44 @@ trigger:
 pool: 
   name: dhruvagent
 
+variables:
+  terraformWorkingDir: '$(System.DefaultWorkingDirectory)/basic code'
+  azureServiceConnection: 'dhruvconection'
+  backendResourceGroup: 'tfdhruvrg'
+  backendStorageAccount: 'tfdhruvstg'
+  backendContainerName: 'tfstate'
+  backendKey: 'terraform.tfstate'
+
 steps:
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: 'latest'
+
 - task: TerraformTask@5
-  displayName: ab init hogaa
+  displayName: 'ab init hogaa'
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/basic code'
-    backendServiceArm: 'dhruvconection'
-    backendAzureRmResourceGroupName: 'tfdhruvrg'
-    backendAzureRmStorageAccountName: 'tfdhruvstg'
-    backendAzureRmContainerName: 'tfstate'
-    backendAzureRmKey: 'terraform.tfstate'
+    workingDirectory: '$(terraformWorkingDir)'
+    backendServiceArm: '$(azureServiceConnection)'
+    backendAzureRmResourceGroupName: '$(backendResourceGroup)'
+    backendAzureRmStorageAccountName: '$(backendStorageAccount)'
+    backendAzureRmContainerName: '$(backendContainerName)'
+    backendAzureRmKey: '$(backendKey)'
 
 - task: TerraformTask@5
-  displayName: plan hoga ab
+  displayName: 'plan hoga ab'
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/basic code'
-    environmentServiceNameAzureRM: 'dhruvconection'
+    workingDirectory: '$(terraformWorkingDir)'
+    environmentServiceNameAzureRM: '$(azureServiceConnection)'
 
 - task: TerraformTask@5
-  displayName: apply hoga ab 
+  displayName: 'apply hoga ab'
   inputs:
     provider: 'azurerm'
     command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/basic code'
+    workingDirectory: '$(terraformWorkingDir)'
     commandOptions: '-auto-approve'
-    environmentServiceNameAzureRM: 'dhruvconection'
+    environmentServiceNameAzureRM: '$(azureServiceConnection)'
