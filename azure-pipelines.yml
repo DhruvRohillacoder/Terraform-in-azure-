@@ -8,8 +8,13 @@ steps:
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: 'latest'
-- task: PowerShell@2
+- task: TerraformTask@5
   inputs:
-    targetType: 'inline'
-    script: 'cd basic code'
-    
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/basic code'
+    backendServiceArm: 'dhruvconection'
+    backendAzureRmResourceGroupName: 'tfdhruvrg'
+    backendAzureRmStorageAccountName: 'tfdhruvstg'
+    backendAzureRmContainerName: 'tfstate'
+    backendAzureRmKey: 'terraform.tfstate'
