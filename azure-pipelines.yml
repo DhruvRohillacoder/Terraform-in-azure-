@@ -9,6 +9,7 @@ steps:
   inputs:
     terraformVersion: 'latest'
 - task: TerraformTask@5
+  displayName: ab init hogaa
   inputs:
     provider: 'azurerm'
     command: 'init'
@@ -20,6 +21,7 @@ steps:
     backendAzureRmKey: 'terraform.tfstate'
 
 - task: TerraformTask@5
+  displayName: plan hoga ab
   inputs:
     provider: 'azurerm'
     command: 'plan'
@@ -35,6 +37,7 @@ steps:
 #     azurePowerShellVersion: 'LatestVersion'
 
 - task: TerraformTask@5
+  displayName: apply hoga ab 
   inputs:
     provider: 'azurerm'
     command: 'apply'
