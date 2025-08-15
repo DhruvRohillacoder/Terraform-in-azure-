@@ -9,6 +9,11 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
+- task: AzurePowerShell@5
+  inputs:
+    azureSubscription: 'dhruvconection'
+    ScriptType: 'InlineScript'
+    Inline: 'git pull'
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
