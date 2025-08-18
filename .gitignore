@@ -35,4 +35,4 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
-*azure-pipelines.yml
+*.azure-pipelines.yml
