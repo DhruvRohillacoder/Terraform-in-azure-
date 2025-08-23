@@ -4,66 +4,10 @@ trigger:
 
 # Agent pool jahan yeh pipeline chalegi (yahan self-hosted agent 'dhruvagent')
 pool: 
-  name: dhruvagent
+  name: terraagent
 
-# Pipeline run karte waqt user se inputs liye jaate hain — yeh flags hain jisse decide hota hai kaunsa step chalega
-parameters:
-  - name: runInit       # Init step chale ya nahi (default true)
-    type: boolean
-    default: true
-  - name: runPlan       # Plan step chale ya nahi (default true)
-    type: boolean
-    default: true
-  - name: runApply      # Apply step chale ya nahi (default false, safety ke liye)
-    type: boolean
-    default: false
-
-# Common variables jo baar baar use ho rahe hain unhe yahan define kiya gaya hai
-variables:
-  terraformWorkingDir: '$(System.DefaultWorkingDirectory)/basic code'   # Terraform code ka path
-  azureServiceConnection: 'dhruvconection'                              # Azure service connection ka naam
-  backendResourceGroup: 'tfdhruvrg'                                     # Backend ke liye Azure resource group
-  backendStorageAccount: 'tfdhruvstg'                                   # Backend ke liye Azure storage account
-  backendContainerName: 'tfstate'                                       # Container jahan state file store hogi
-  backendKey: 'terraform.tfstate'                                       # State file ka naam
-
-# Terraform ka latest version install hota hai yahan
 steps:
+  - 
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: 'latest'
-
-# Terraform init step — condition ke through yeh tabhi chalega jab user runInit = true rakhe
-- task: TerraformTask@5
-  displayName: 'ab init hogaa'
-  condition: eq('${{ parameters.runInit }}', true)
-  inputs:
-    provider: 'azurerm'
-    command: 'init'
-    workingDirectory: '$(terraformWorkingDir)'
-    backendServiceArm: '$(azureServiceConnection)'
-    backendAzureRmResourceGroupName: '$(backendResourceGroup)'
-    backendAzureRmStorageAccountName: '$(backendStorageAccount)'
-    backendAzureRmContainerName: '$(backendContainerName)'
-    backendAzureRmKey: '$(backendKey)'
-
-# Terraform plan step — tabhi chalega jab user runPlan = true kare
-- task: TerraformTask@5
-  displayName: 'plan hoga ab'
-  condition: eq('${{ parameters.runPlan }}', true)
-  inputs:
-    provider: 'azurerm'
-    command: 'plan'
-    workingDirectory: '$(terraformWorkingDir)'
-    environmentServiceNameAzureRM: '$(azureServiceConnection)'
-
-# Terraform apply step — tabhi chalega jab user runApply = true kare (default false)
-- task: TerraformTask@5
-  displayName: 'apply hoga ab'
-  condition: eq('${{ parameters.runApply }}', true)
-  inputs:
-    provider: 'azurerm'
-    command: 'apply'
-    workingDirectory: '$(terraformWorkingDir)'
-    commandOptions: '-auto-approve'
-    environmentServiceNameAzureRM: '$(azureServiceConnection)'
