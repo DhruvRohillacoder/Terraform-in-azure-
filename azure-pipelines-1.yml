@@ -38,4 +38,5 @@ steps:
     provider: 'azurerm'
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/basic code'
+    commandOptions: '--auto-approve'
     environmentServiceNameAzureRM: 'terraconection'
