@@ -6,3 +6,13 @@ resource "azurerm_storage_account" "cc-storage" {
   account_tier             = "Standard"
   account_replication_type = "GRS"
 }
+
+
+resource "azurerm_storage_account" "cc-storage1" {
+  name                     = "ccstorage12kyo202"
+  resource_group_name      = "cc-resource-group12"
+  location                 = "eastus"
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
+}
+
