@@ -4,7 +4,7 @@ trigger:
 pool:
   name: terraagent
 variables:
-wd = '$(System.DefaultWorkingDirectory)/basic code'
+ wd: '$(System.DefaultWorkingDirectory)/basic code'
 
 steps:
 - task: TerraformInstaller@1
