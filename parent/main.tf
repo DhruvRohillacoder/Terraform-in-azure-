@@ -1,6 +1,30 @@
-module "storage" {
-  source = "../child/storage_account"
-}
-module "rg" {
+module "RG" {
   source = "../child/resource_group"
+}
+
+module "STG" {
+  source     = "../child/storage_account"
+  depends_on = [module.RG]
+}
+
+module "vnet" {
+  depends_on = [module.RG]
+  source     = "../child/vnet"
+}
+
+module "subnet" {
+  source     = "../child/subnet"
+  depends_on = [module.vnet]
+}
+
+module "public_ip" {
+  source     = "../child/Public_ip"
+  depends_on = [module.RG]
+}
+
+module "vm" {
+  source     = "../child/VM"
+  depends_on = [module.public_ip, module.subnet]
+
+
 }
