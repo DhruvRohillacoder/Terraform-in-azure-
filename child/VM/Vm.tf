@@ -9,6 +9,32 @@ resource "azurerm_network_interface" "nic" {
     public_ip_address_id          = data.azurerm_public_ip.public_ip.id
   }
 }
+resource "azurerm_network_security_group" "nsg" {
+  name                = "cc-nsg"
+  location            = "centralindia"
+  resource_group_name = "cc-resource-group12"
+}
+
+resource "azurerm_network_security_rule" "allow_ssh" {
+  name                        = "Allow-SSH"
+  priority                    = 1001
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "22"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "cc-resource-group12"
+  network_security_group_name = azurerm_network_security_group.nsg.name
+}
+
+
+resource "azurerm_network_interface_security_group_association" "nic_nsg" {
+  network_interface_id      = azurerm_network_interface.nic.id
+  network_security_group_id = azurerm_network_security_group.nsg.id
+}
+
 
 resource "azurerm_linux_virtual_machine" "Vm" {
   name                = "cc-vm"
