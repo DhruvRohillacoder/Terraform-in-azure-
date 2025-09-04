@@ -14,8 +14,8 @@ provider "azurerm" {
 }
 terraform {
   backend "azurerm" {
-    resource_group_name  = "tfdhruvrg"
-    storage_account_name = "tfdhruvstg" //this is the name of the storage account
+    resource_group_name  = "apptf"
+    storage_account_name = "apptfstg" //this is the name of the storage account
     container_name       = "tfstate"
     key                  = "terraform.tfstate" //this is the name of the state file
   }

@@ -1,8 +1,7 @@
 resource "azurerm_network_interface" "nic" {
   name                = "cc-nic"
-  location            = "eastus"
+  location            = "centralindia"
   resource_group_name = "cc-resource-group12"
-
   ip_configuration {
     name                          = "internal"
     subnet_id                     = data.azurerm_subnet.subnet.id
@@ -14,7 +13,7 @@ resource "azurerm_network_interface" "nic" {
 resource "azurerm_linux_virtual_machine" "Vm" {
   name                = "cc-vm"
   resource_group_name = "cc-resource-group12"
-  location            = "eastus"
+  location            = "centralindia"
   size                = "Standard_F2"
   admin_username      = data.azurerm_key_vault_secret.vm-username.value
   network_interface_ids = [
