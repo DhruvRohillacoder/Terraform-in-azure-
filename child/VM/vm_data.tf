@@ -10,7 +10,7 @@ data "azurerm_public_ip" "public_ip" {
 }
 
 data "azurerm_key_vault" "kv" {
-  name                = "myvaultt2"
+  name                = "myvaultt3"
   resource_group_name = "apptf"
 }
 data "azurerm_key_vault_secret" "vm-username" {
