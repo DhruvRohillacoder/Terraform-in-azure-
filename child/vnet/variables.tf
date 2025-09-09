@@ -7,13 +7,8 @@ variable "vnets" {
   default = {
     vnet1 = {
       address_space       = ["10.0.0.0/16"]
-      location            = "eastus"
-      resource_group_name = "rg1"
-    }
-    vnet2 = {
-      address_space       = ["10.1.0.0/16"]
-      location            = "westus"
-      resource_group_name = "rg2"
+      location            = "centralindia"
+      resource_group_name = "dhruv1"
     }
   }
 }

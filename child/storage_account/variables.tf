@@ -14,19 +14,5 @@ variable "storage_accounts" {
       account_tier             = "Standard"
       account_replication_type = "LRS"
     }
-    stg2 = {
-      name                     = "stg2dhruv202509"
-      location                 = "centralindia"
-      resource_group_name      = "dhruv2"
-      account_tier             = "Standard"
-      account_replication_type = "GRS"
-    }
-    stg3 = {
-      name                     = "stg3dhruv202509"
-      location                 = "centralindia"
-      resource_group_name      = "dhruv2"
-      account_tier             = "Standard"
-      account_replication_type = "GRS"
-    }
   }
 }

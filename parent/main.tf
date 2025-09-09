@@ -8,10 +8,10 @@ module "STG" {
 
 
 
-# module "vnet" {
-#   source     = "../child/vnet"
-#   depends_on = [module.rg]
-# }
+module "vnet" {
+  source     = "../child/vnet"
+  depends_on = [module.rg]
+}
 
 # module "subnet" {
 #   source     = "../child/subnet"

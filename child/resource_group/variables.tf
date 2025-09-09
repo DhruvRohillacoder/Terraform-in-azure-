@@ -5,6 +5,5 @@ variable "resource_groups" {
   }))
   default = {
     rg1 = { name = "dhruv1", location = "centralindia" }
-    rg2 = { name = "dhruv2", location = "centralindia" }
   }
 }
