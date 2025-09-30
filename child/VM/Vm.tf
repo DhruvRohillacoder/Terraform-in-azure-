@@ -1,7 +1,7 @@
 resource "azurerm_network_interface" "nic" {
   name                = "cc-nic"
   location            = "centralindia"
-  resource_group_name = "cc-resource-group12"
+  resource_group_name = "dhruv1"
   ip_configuration {
     name                          = "internal"
     subnet_id                     = data.azurerm_subnet.subnet.id
@@ -12,7 +12,7 @@ resource "azurerm_network_interface" "nic" {
 resource "azurerm_network_security_group" "nsg" {
   name                = "cc-nsg"
   location            = "centralindia"
-  resource_group_name = "cc-resource-group12"
+  resource_group_name = "dhruv1"
 }
 
 resource "azurerm_network_security_rule" "allow_ssh" {
@@ -25,7 +25,7 @@ resource "azurerm_network_security_rule" "allow_ssh" {
   destination_port_range      = "22"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = "cc-resource-group12"
+  resource_group_name         = "dhruv1"
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
 
@@ -38,7 +38,7 @@ resource "azurerm_network_interface_security_group_association" "nic_nsg" {
 
 resource "azurerm_linux_virtual_machine" "Vm" {
   name                = "cc-vm"
-  resource_group_name = "cc-resource-group12"
+  resource_group_name = "dhruv1"
   location            = "centralindia"
   size                = "Standard_F2"
   admin_username      = data.azurerm_key_vault_secret.vm-username.value

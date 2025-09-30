@@ -7,7 +7,7 @@ variable "public_ips" {
   default = {
     pip2 = {
       location            = "centralindia"
-      resource_group_name = "rg2"
+      resource_group_name = "dhruv1"
       allocation_method   = "Static"
     }
   }

@@ -1,16 +1,16 @@
 data "azurerm_subnet" "subnet" {
-  name                 = "cc-subnet"
-  virtual_network_name = "cc_vnet"
-  resource_group_name  = "cc-resource-group12"
+  name                 = "subnet1"
+  virtual_network_name = "vnet1"
+  resource_group_name  = "dhruv1"
 }
 
 data "azurerm_public_ip" "public_ip" {
-  name                = "cc-public_ip"
-  resource_group_name = "cc-resource-group12"
+  name                = "pip2"
+  resource_group_name = "dhruv1"
 }
 
 data "azurerm_key_vault" "kv" {
-  name                = "myvaultt3"
+  name                = "myvaultt4"
   resource_group_name = "apptf"
 }
 data "azurerm_key_vault_secret" "vm-username" {

@@ -14,12 +14,12 @@ module "subnet" {
   depends_on = [module.vnet]
 }
 
-# module "public_ip" {
-#   source     = "../child/Public_ip"
-#   depends_on = [module.rg]
-# }
+module "public_ip" {
+  source     = "../child/Public_ip"
+  depends_on = [module.rg]
+}
 
-# module "vm" {
-#   source     = "../child/VM"
-#   depends_on = [module.public_ip, module.subnet]
-# }
+module "vm" {
+  source     = "../child/VM"
+  depends_on = [module.public_ip, module.subnet]
+}
