@@ -10,5 +10,11 @@ variable "vnets" {
       location            = "centralindia"
       resource_group_name = "dhruv1"
     }
+
+    vnet2 = {
+      address_space       = ["10.1.0.0/16"]
+      location            = "centralindia"
+      resource_group_name = "dhruv1"
+    }
   }
 }
