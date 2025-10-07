@@ -1,93 +1,199 @@
-# Azure Virtual Machine Deployment with Terraform
+# Azure Infrastructure Deployment with Terraform
 
-This repository automates the deployment of a complete Azure infrastructure using Terraform modules. It provisions a resource group, storage account, virtual network, subnet, public IP, and a virtual machine, following Azure best practices for modularity and security.
+This repository contains Terraform configurations to deploy a complete Azure infrastructure including Virtual Machine and supporting resources.
 
-## Project Structure
+## 🚀 Infrastructure Components
+
+- Resource Group
+- Storage Account
+- Virtual Network
+- Subnet
+- Public IP
+- Virtual Machine
+- Network Security Group
+- Key Vault (optional)
+
+## 📁 Project Structure
 
 ```
 Terraform-in-azure-/
 ├── parent/
-│   ├── main.tf          # Root module: assembles all child modules
-│   └── provider.tf      # Azure provider and backend configuration
-├── child/
-│   ├── resource_group/  # Resource Group module
-│   ├── storage_account/ # Storage Account module
-│   ├── vnet/            # Virtual Network module
-│   ├── subnet/          # Subnet module
-│   ├── Public_ip/       # Public IP module
-│   └── VM/              # Virtual Machine module
+│   ├── main.tf          # Main configuration file
+│   └── provider.tf      # Azure provider configuration
+└── child/
+    ├── resource_group/  # Resource Group module
+    │   ├── resourcegroup.tf
+    │   └── variables.tf
+    ├── storage_account/ # Storage Account module
+    │   ├── storageaccount.tf
+    │   └── variables.tf
+    ├── vnet/           # Virtual Network module
+    │   ├── vnet.tf
+    │   └── variables.tf
+    ├── subnet/         # Subnet module
+    │   ├── subnet.tf
+    │   └── variables.tf
+    ├── Public_ip/      # Public IP module
+    │   ├── public_ip.tf
+    │   └── variables.tf
+    └── VM/             # Virtual Machine module
+        ├── Vm.tf
+        ├── vm_data.tf
+        └── variables.tf
 ```
 
-## Features
+## 🔧 Prerequisites
 
-- **Modular Design:** Each Azure resource is defined in its own module for reusability and clarity.
-- **Remote State:** Uses Azure Storage Account for storing Terraform state securely.
-- **Dependency Management:** Ensures resources are created in the correct order using `depends_on`.
-- **Secrets Management:** (Recommended) Use Azure Key Vault for sensitive data like VM credentials.
+1. [Terraform](https://www.terraform.io/downloads.html) installed (v1.0.0 or newer)
+2. [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) installed
+3. Azure subscription
+4. Azure CLI logged in (`az login`)
 
-## Prerequisites
-
-- [Terraform](https://www.terraform.io/downloads.html) installed
-- Azure CLI installed and authenticated (`az login`)
-- Sufficient permissions in your Azure subscription
-- **(For remote backend setup, run this one-liner in terminal to create backend resources quickly):**
-
-  ```powershell
-  az group create --name apptf --location eastus; az storage account create --name apptfstg --resource-group apptf --location eastus --sku Standard_LRS --kind StorageV2; $key = (az storage account keys list --resource-group apptf --account-name apptfstg --query "[0].value" -o tsv); az storage container create --name tfstate --account-name apptfstg --account-key $key
-  ```
-
-  - This will create a resource group, storage account, and container for Terraform remote state in one step.
-
-## Usage
+## 🚀 Getting Started
 
 1. **Clone the repository**
-
-   ```sh
-   git clone <your-repo-url>
-   cd Terraform-in-azure-/parent
+   ```bash
+   git clone https://github.com/DhruvRohillacoder/Terraform-in-azure-.git
+   cd Terraform-in-azure-
    ```
 
-2. **Initialize Terraform**
+2. **Navigate to parent directory**
+   ```bash
+   cd parent
+   ```
 
-   ```sh
+3. **Initialize Terraform**
+   ```bash
    terraform init
    ```
 
-3. **Validate the configuration**
-
-   ```sh
+4. **Validate the configuration**
+   ```bash
    terraform validate
    ```
 
-4. **Preview the changes**
-
-   ```sh
+5. **Review the deployment plan**
+   ```bash
    terraform plan
    ```
 
-5. **Apply the configuration**
-   ```sh
+6. **Apply the configuration**
+   ```bash
    terraform apply
    ```
 
-## Customization
+7. **Clean up resources (when needed)**
+   ```bash
+   terraform destroy
+   ```
 
-- Edit variables in each child module to customize resource names, sizes, locations, etc.
-- Update `provider.tf` for your Azure subscription and backend storage details.
+## 📋 Module Dependencies
 
-## Best Practices
+The modules are executed in the following order due to dependencies:
 
-- **Use remote state** for collaboration and disaster recovery.
-- **Store secrets in Azure Key Vault** and reference them in your modules.
-- **Modularize resources** for easier maintenance and scalability.
-- **Review and commit your Terraform state files securely.**
+1. Resource Group
+2. Storage Account & Virtual Network (parallel)
+3. Subnet
+4. Public IP
+5. Virtual Machine
 
-## Troubleshooting
+## 🔐 Security Notes
 
-- Ensure all paths in `main.tf` are correct and modules exist.
-- If you see errors about unreadable module directories, check that the `child` folder and its subfolders are present and named correctly.
-- Run `terraform init` after any changes to module sources.
+- All sensitive information should be stored in Azure Key Vault
+- Use Azure RBAC for access control
+- Ensure proper network security group rules
+- Follow the principle of least privilege
 
-## License
+## 🔍 Terraform Commands Reference
 
-MIT
+- `terraform init` - Initialize working directory
+- `terraform validate` - Validate configuration files
+- `terraform plan` - Preview changes
+- `terraform apply` - Apply changes
+- `terraform destroy` - Remove all resources
+- `terraform show` - Show current state
+- `terraform output` - Show output values
+
+## 🐛 Troubleshooting
+
+1. **Module not found errors**
+   - Ensure all module paths in main.tf are correct
+   - Check if all directories exist
+   - Run `terraform init` after adding new modules
+
+2. **Azure provider errors**
+   - Verify Azure CLI is logged in
+   - Check subscription access
+   - Validate provider configuration
+
+3. **Resource creation failures**
+   - Check Azure quotas and limits
+   - Verify resource name availability
+   - Review error messages in Azure Portal
+
+## 📝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 👥 Author
+
+DhruvRohillacoder
+
+## 🖥️ VM Specification
+
+Below is the recommended VM specification used by the `child/VM` module. You can copy these values into the module's `variables.tf` or override them in your root module.
+
+- 🎯 Purpose: Development / small production workloads
+- 🌍 Location: centralindia (changeable via variable)
+- 📦 Size (SKU): `Standard_B2ms` — 2 vCPU, 8 GB RAM (good balance for light workloads)
+- 💾 OS: Ubuntu 22.04 LTS (image alias in module)
+- 🔐 SSH access: Public key authentication (recommended)
+- 🔌 Network: NIC attached to subnet; Public IP assigned (optional)
+- 🔒 NSG: Allow SSH (22) from trusted IPs; allow application ports you need
+- 🔄 Storage: Managed OS disk (StandardSSD_LRS) + optional data disk
+- 🧾 Tags: owner, environment, project
+
+Example Terraform variables (place in `child/VM/variables.tf` or pass from `parent/main.tf`):
+
+```hcl
+variable "vm_spec" {
+  type = object({
+    vm_size           = string
+    admin_username    = string
+    admin_ssh_key     = string
+    location          = string
+    image_publisher   = string
+    image_offer       = string
+    image_sku         = string
+    os_disk_type      = string
+    enable_public_ip  = bool
+  })
+  default = {
+    vm_size          = "Standard_B2ms"
+    admin_username   = "azureuser"
+    admin_ssh_key    = "ssh-rsa AAAA... your public key ..."
+    location         = "centralindia"
+    image_publisher  = "Canonical"
+    image_offer      = "0001-com-ubuntu-server-jammy"
+    image_sku        = "22_04-lts-gen2"
+    os_disk_type     = "StandardSSD_LRS"
+    enable_public_ip = true
+  }
+}
+```
+
+Quick tips:
+- Use an existing Key Vault to store secrets and reference them with `data.azurerm_key_vault_secret` instead of hardcoding.
+- For production, choose a higher VM SKU (e.g., `Standard_D4s_v3`) and premium disks (`Premium_LRS`).
+- Lock down NSG rules; use Azure Bastion or jumpbox for SSH access instead of exposing port 22 publicly.
+
+---
+**Note:** Remember to update the variables in each module according to your requirements before deploying.
