@@ -11,11 +11,11 @@ terraform {
     storage_account_name = "dhruvbdstg"
     container_name       = "terrafornbd"
     key                  = "dev.tfstate"
-    subscription_id      = "e18988e4-e1f4-4f06-9339-c63c8a22d3d9"
+    subscription_id      = "c060d854-01c4-4739-baf7-57540765c3d2"
   }
 }
 
 provider "azurerm" {
   features {}
-  subscription_id = "e18988e4-e1f4-4f06-9339-c63c8a22d3d9"
+  subscription_id = "c060d854-01c4-4739-baf7-57540765c3d2"
 }
