@@ -15,3 +15,18 @@ stages:
           - task: TerraformInstaller@1
             inputs:
               terraformVersion: 'latest'
+      
+
+  -  stage: stagefirstt2
+     displayName: start first stage2
+     jobs:
+       - job: terraformplan
+         steps:
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              workingDirectory: '$(System.DefaultWorkingDirectory)\Env\Dev'
+              environmentServiceNameAzureRM: 'dhruv_sc'
+                
+          
