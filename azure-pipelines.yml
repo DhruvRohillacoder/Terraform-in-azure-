@@ -7,7 +7,8 @@ trigger:
 pool: DEV
 
 stages:
-  -  stage: terraforminit
+  -  stage: stagefirstt 
+     displayName: start first stage
      jobs:
        - job: terraformintjob
          steps:
