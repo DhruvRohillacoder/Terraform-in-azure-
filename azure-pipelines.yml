@@ -1,0 +1,29 @@
+trigger: 
+ branches:
+   include:
+     - main
+     - feature01
+
+pool: DEV
+
+stages:
+  -  stage: stagefirstt 
+     displayName: start first stage
+     jobs:
+       - job: terraformintjob
+         steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Env/Dev'
+              backendServiceArm: 'dhruv_sc'
+              backendAzureRmOverrideSubscriptionID: 'c060d854-01c4-4739-baf7-57540765c3d2'
+              backendAzureRmResourceGroupName: 'dhruv-bd'
+              backendAzureRmStorageAccountName: 'dhruvbdstg1'
+              backendAzureRmContainerName: 'terrafornbd'
+              backendAzureRmKey: 'dev.tfstate'
+             
