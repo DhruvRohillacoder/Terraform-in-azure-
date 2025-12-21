@@ -25,7 +25,7 @@ stages:
           - task: TerraformTask@5
             inputs:
               provider: 'azurerm'
-              command: 'plan'
+              command: 'init'
               workingDirectory: '$(System.DefaultWorkingDirectory)\Env\Dev'
               environmentServiceNameAzureRM: 'dhruv_sc'
                 
