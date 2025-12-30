@@ -1,4 +1,4 @@
-resource "azurerm_resource_group" "vm-rg" {
-  name     = "vm-rg1"
-  location = "West US"
+resource "azurerm_resource_group" "ddrg" {
+  name     = "ddrg"
+  location = "Canada Central"
 }
