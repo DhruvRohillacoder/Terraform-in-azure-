@@ -36,6 +36,16 @@ stages:
         provider: 'azurerm'
         command: 'validate'
         workingDirectory: '$(WORK_DIR)'
+
+
+    - task: TerraformTask@5
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(WORK_DIR)'
+        environmentServiceNameAzureRM: 'dhruv_sc'
+        environmentAzureRmOverrideSubscriptionID: 'c060d854-01c4-4739-baf7-57540765c3d2'
+    
     
 
 
