@@ -7,7 +7,7 @@ pool:
   name: DEV
 variables:
 - name: WORK_DIR
-  value: '$(System.DefaultWorkingDirectory)/env/dev'
+  value: '$(System.DefaultWorkingDirectory)/Env/Dev'
 stages:
 - stage: initValidatePlan
   displayName: Terraform Init, Validate and Plan
@@ -30,6 +30,13 @@ stages:
         backendAzureRmStorageAccountName: 'dhruvbdstg4'
         backendAzureRmContainerName: 'terrafornbd'
         backendAzureRmKey: 'Dev.tfstate'
+    
+    - task: TerraformTask@5
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: 'WORK_DIR'
+    
 
 
 
