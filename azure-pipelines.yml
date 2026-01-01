@@ -35,7 +35,7 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'validate'
-        workingDirectory: 'WORK_DIR'
+        workingDirectory: '$(WORK_DIR)'
     
 
 
