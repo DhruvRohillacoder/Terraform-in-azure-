@@ -54,7 +54,7 @@ stages:
         displayName: infracosting check
         inputs:
          script: 'infracost breakdown --path . --format=html > cost-out.html'
-         workingDirectory: '$(WORK_DIR)'
+         workingDirectory: '$(System.DefaultWorkingDirectory)/Env/Dev'
         
 
 
