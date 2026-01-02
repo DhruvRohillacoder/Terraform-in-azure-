@@ -46,7 +46,16 @@ stages:
         environmentServiceNameAzureRM: 'dhruv_sc'
         environmentAzureRmOverrideSubscriptionID: 'c060d854-01c4-4739-baf7-57540765c3d2'
     
-    
+- stage: infracostestimate
+  jobs:
+    - job: infracosttool
+      steps:
+      - task: CmdLine@2
+        displayName: infracosting check
+        inputs:
+         script: 'infracost breakdown --path . --format=html > cost-out.html'
+         workingDirectory: '$(WORK_DIR)'
+        
 
 
 
